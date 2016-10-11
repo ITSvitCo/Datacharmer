@@ -16,6 +16,8 @@ This step-by-step guide describes how to deploy a simple PHP script that outputs
 * Configuration Management tool for configuring server (Saltstack/Ansible/Puppet/Chef)
 
 # Installation process
+> **NOTE!** Before proceeding make sure that the user that will be used to connect to the remote host is a member of the `sudo` group. For more details on how to add the user to the `sudo` group, please refer to this [manual](http://askubuntu.com/a/2224).
+
 1. Clone/download the repository from GitHub:
 ```
 git clone https://github.com/ITSvitCo/Datacharmer.git
@@ -24,14 +26,14 @@ git clone https://github.com/ITSvitCo/Datacharmer.git
 ```
 cd Datacharmer
 ```
-3. Launch the `setup.sh` script:
+3. Launch the `setup.sh` script using sudo privileges:
 ```
-./setup.sh 192.168.206.182 root
+sudo ./setup.sh 192.168.206.182 root
 ```
 or 
 
 ```
-./setup.sh 192.168.206.182 root 123
+sudo ./setup.sh 192.168.206.182 root 123
 ```
 
 where
