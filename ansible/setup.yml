@@ -1,4 +1,4 @@
-# Добавляем хост в inventory
+# Adding hosts to inventory
 - hosts: localhost
   tasks:
   - name: Add host to the inventory
@@ -6,7 +6,7 @@
       module: add_host 
       name: "{{ host }}"
 
-# Устанавливаем python для работы ansible 
+# Setting up python for ansible 
 - hosts: "{{ host }}"
   remote_user: "{{ r_user }}"
   gather_facts: false
@@ -20,9 +20,9 @@
   become_method: sudo
 
   roles:
-# Устанавливаем php7-fpm
+# Setting up php7-fpm
   - role: vso2.php7-fpm
-# Устанавливаем nginx
+# Setting up nginx
   - role: vso2.nginx
     nginx_vhosts:
     - listen: "80"
@@ -39,34 +39,33 @@
           }
 
   tasks:
-# Клонируем репозиторий с сайтом
+# Cloning repo with the site
   - name: Get repo
     git: repo=https://github.com/ITSvitCo/Datacharmer.git dest="{{ root_dir }}"
-# Клонируем репозиторий с DB
+# Cloning repo with the DB
   - name: Get test_db
     git: repo=https://github.com/datacharmer/test_db dest="{{ root_dir }}/test_db"
-# Setup mysql
+# Setting up mysql
   - name: Install mysql
     apt: name=mysql-server state=installed
-# Start mysql
+# Starting mysql
   - name: Start mysql
     shell: systemctl start mysql
-# Set root password
+# Setting root password
   - name: Set root password
     shell: mysql -e "SET PASSWORD = PASSWORD('1')"
-# Create user to connect to db
+# Creating user to connect to the DB
   - name: Create user
     shell: mysql -e "CREATE USER 'test'@'localhost' IDENTIFIED BY '1';"; mysql -e "GRANT ALL PRIVILEGES ON employees . * TO 'test'@'localhost'"; mysql -e "FLUSH PRIVILEGES;"
-# Create cred_file for mysql
+# Creating cred_file for mysql
   - name: Create cred_file for mysql
     shell: echo '[client]' > ~/.my.cnf; echo 'user=root' >> ~/.my.cnf; echo 'password = 1' >> ~/.my.cnf
-# Create db
+# Creating the DB
   - name: Create db
     shell: mysql -e 'CREATE DATABASE employees'
-# Restore db
+# Restoring the DB
   - name: Restore DB
     shell: cd "{{ root_dir }}/test_db"; mysql employees < "employees.sql"
-# Add rule to firewall
+# Adding rules to firewall
   - name: Add iptables rule
     shell: iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT
-
