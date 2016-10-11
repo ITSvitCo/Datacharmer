@@ -8,17 +8,42 @@
 
 - hosts: "{{ host }}"
   remote_user: "{{ r_user }}"
+  gather_facts: false
+  tasks:
+  - name: install python2
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+
+- hosts: "{{ host }}"
+  remote_user: "{{ r_user }}"
   become: true
   become_method: sudo
 
   roles:
 
+  - role: vso2.php7-fpm
+
+  - role: vso2.nginx
+  - role: vso2.nginx
+    nginx_vhosts:
+    - listen: "80"
+      server_name: "{{ host }}"
+      root: "{{ site_root }}/site"
+      index: "index.php index.html index.htm"
+      extra_parameters: |
+        location ~ \.php$ {
+          fastcgi_split_path_info ^(.+\.php)(/.+)$;
+          fastcgi_pass 127.0.0.1:9000;
+          fastcgi_index index.php;
+          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+          include fastcgi_params;
+          }
+
   tasks:
   - name: Get repo
-    git: repo=https://github.com/ITSvitCo/Datacharmer.git dest="{{ root_dir }}"
+    git: repo=https://github.com/ITSvitCo/Datacharmer.git dest=/opt/itsvit-devops
 
   - name: Get test_db
-    git: repo=https://github.com/datacharmer/test_db dest="{{ root_dir }}/test_db"
+    git: repo=https://github.com/datacharmer/test_db dest=/opt/itsvit-devops/test_db
 
   - name: Install mysql
     apt: name=mysql-server state=installed
@@ -39,7 +64,7 @@
     shell: mysql -e 'CREATE DATABASE employees'
 
   - name: Restore DB
-    shell: cd "{{ root_dir }}/test_db"; mysql employees < "employees.sql"
+    shell: cd mysql employees < "/opt/itsvit-devops/test_db/employees.sql"
 
   - name: Add iptables rules
     shell: iptables -I INPUT -p tcp -m tcp --dport 80 -j ACCEPT

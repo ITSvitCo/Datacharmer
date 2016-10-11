@@ -3,6 +3,8 @@
 #set -o xtrace
 #set -e
 
+ROOT_DIR=/opt/itsvit-devops
+
 function get_distr_famaly(){
   if [ -a /etc/debian_version ]; then
     echo "Debian"
@@ -31,7 +33,6 @@ else
 fi
 
 
-ROOT_DIR=`pwd`
 cd ansible
 
-ansible-playbook -vv setup.yml -e "host=$1 site_root=${ROOT_DIR} r_user=$2"
+ansible-playbook -vvv setup.yml -e "host=$1 root_dir=${ROOT_DIR} r_user=$2"
