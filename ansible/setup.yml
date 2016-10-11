@@ -27,7 +27,7 @@
     nginx_vhosts:
     - listen: "80"
       server_name: "{{ host }}"
-      root: "{{ site_root }}/site"
+      root: "{{ root_dir }}/site"
       index: "index.php index.html index.htm"
       extra_parameters: |
         location ~ \.php$ {
