@@ -39,16 +39,19 @@ where
 * `root` - username to be used to connect to the remote host
 * `123` - password (no password required if connection is established using a key)
 
+Once launched, you should see something like shown on the screenshot below:
+![]()
+
+
 # Testing the installation
 * Open your web browser and specify the following address:
 ```
 http://192.168.206.182
 ```
 
-Once specified, you should see the final query sample as shown below:
+Once specified, you should see the final query sample as shown on the screenshot below:
 
-```
-```
+![]()
 
 It means that the script was executed successfully and testing is completed.
 
