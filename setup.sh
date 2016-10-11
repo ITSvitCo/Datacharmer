@@ -3,10 +3,10 @@
 #set -o xtrace
 #set -e
 
-# директория на удаленном хосте, в которой будет хранится все необходимые файлы.
+# Directory on the remote host that will store all the necessary files
 ROOT_DIR=/opt/itsvit-devops
 
-# Определяем семейство ОС
+# Defining OS family
 function get_distr_family(){
   if [ -a /etc/debian_version ]; then
     echo "Debian"
@@ -21,27 +21,24 @@ function get_distr_family(){
 
 DISTR=`get_distr_family`
 
-# Определяем установлены ли следующие компоненты
+# Defining whether the following components are installed
 ANSIBLE=`which ansible` 2> /dev/null
-GIT=`which git` 2>/dev/null
 SSHPASS=`which sshpass` 2>/dev/null
 
-# If not install
+# If not - installing them
 if [ "RedHat" == ${DISTR} ]; then
   [ -z ${ANSIBLE} ] && yum install -y ansible 
-  [ -z ${GIT} ] && yum install -y git
   [ -z ${SSHPASS} ] && yum install -y sshpass
 else 
   [ -z ${ANSIBLE} ] && apt-get install -y ansible
-  [ -z ${GIT} ] && apt-get install -y git
   [ -z ${SSHPASS} ] && apt-get install -y sshpass
 
 fi
 
-# Переходим в каталог с ансибл плэйбуком
+# Changing directory to that with ansible playbook
 cd ansible
 
-# Проверка как нужно подключаться к хосту: По ключу или по паролю
+# Defining how to connect to the host: using key or password
 if [[ -z "$3" ]]; then
     ansible-playbook -vv setup.yml -e "host=$1 root_dir=${ROOT_DIR} r_user=$2"
 else
