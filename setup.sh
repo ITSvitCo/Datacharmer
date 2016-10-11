@@ -35,4 +35,4 @@ fi
 
 cd ansible
 
-ansible-playbook -vvv setup.yml -e "host=$1 root_dir=${ROOT_DIR} r_user=$2"
+ansible-playbook -vv setup.yml -e "host=$1 root_dir=${ROOT_DIR} r_user=$2"
