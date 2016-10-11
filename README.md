@@ -1,4 +1,4 @@
-Datacharmer Deployment guide
+Datacharmer Deployment Guide
 ==============================
 
 # Introduction
@@ -6,65 +6,54 @@ This step-by-step guide describes how to deploy a simple PHP script that outputs
 * Male
 * which birth date is `1965-02-01`
 * the hire date is `greater` than `1990-01-01`
-* ordered by the `Full Name` of the employee. 
+* ordered by the `Full Name` of the employee.
 
-# Requrements
-
-# System components
+# System on test
 * Ubuntu 16.04 LTS
 * NGINX web server 
 * PHP 
 * MySQL server 
 * Configuration Management tool for configuring server (Saltstack/Ansible/Puppet/Chef)
 
-
-# Список каталогов
-ansible - (К) плэйбуки и роли Ansible
-README.md (Ф)
-setup.sh - (Ф) Исполняемый скрипт
-site (К) - index.php 
-
-
 # Installation process
-1. Download the repository from GitHub
+1. Clone/download the repository from GitHub:
+```
 git clone https://github.com/ITSvitCo/Datacharmer.git
-1.1. Запускаем скрипт setup.sh с параметрами 1-й адрес хоста на который будет произведен деплой, 2-й имя пользлователя для подключения к удаленному хосту, 3-й пароль (если подключение будет осущ. по ключу - пароль не нужен)
-./setup.sh 192.168.206.182 root or ./setup.sh 192.168.206.182 root 123
 ```
-command
+2. Change to the `Datacharmer` directory:
 ```
-
-
-
-2. Change to the `directory` directory
-
+cd Datacharmer
 ```
-command
+3. Launch the `setup.sh` script:
 ```
-
-3. Execute the following Ansible command:
+./setup.sh 192.168.206.182 root
+```
+or 
 
 ```
-command <parameters>
+./setup.sh 192.168.206.182 root 123
 ```
 
-4. setup.sh
-    ROOT_DIR=/opt/itsvit-devops - директория на удаленном хосте, в которой будет хранится все необходимые файлы.
-    function get_distr_family - определяем семейство дистрибутива Linux
-    
+where
+* `192.168.206.182` - address of the host that will be used for deployment
+* `root` - username to be used to connect to the remote host
+* `123` - password (no password required if connection is established using a key)
 
 # Testing the installation
-* Navigate to the following address:
+* Open your web browser and specify the following address:
 ```
-Открываем браузер и вводим адрес удаленного хоста
-
-
+http://192.168.206.182
 ```
 
-Once finished, you should see final results similar to those showed below:
-
+Once specified, you should see the final query sample as shown below:
 
 ```
 ```
 
-It means that the testing process was completed successfully.
+It means that the script was executed successfully and testing is completed.
+
+# List of files and catalogs
+* `ansible` - Folder that contains playbooks and roles for Ansible
+* `README.md` - This README file
+* `setup.sh` - The main executable script
+* `site` - Folder that contans `index.php` file to perform a request to the database
