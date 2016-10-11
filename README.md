@@ -40,7 +40,8 @@ where
 * `123` - password (no password required if connection is established using a key)
 
 Once launched, you should see something like shown on the screenshot below:
-![]()
+
+![](sample_images/script.png)
 
 
 # Testing the installation
@@ -51,12 +52,13 @@ http://192.168.206.182
 
 Once specified, you should see the final query sample as shown on the screenshot below:
 
-![]()
+![](sample_images/query.png)
 
 It means that the script was executed successfully and testing is completed.
 
 # List of files and catalogs
 * `ansible` - Folder that contains playbooks and roles for Ansible
+* `sample_images` - Folder that contains sample screenshots for the README.md file
 * `README.md` - This README file
 * `setup.sh` - The main executable script
 * `site` - Folder that contans `index.php` file to perform a request to the database
