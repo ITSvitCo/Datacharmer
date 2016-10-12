@@ -14,7 +14,7 @@ try {
                 ORDER BY first_name, last_name ASC';
     $employees = $db->query($query);
     while($row = $employees->fetch(PDO::FETCH_ASSOC)) {
-        echo $row['first_name'] . ' ' . $row['last_name'] . ' ' . $row['birth_date'] . ' ' . $row['hire_date'] . ' ' . $row['gender'] . '<br />' . PHP_EOL; 
+        echo $row['first_name'] . ' ' . $row['last_name'] . ' ' . $row['birth_date'] . ' ' . $row['hire_date'] . ' ' . $row['gender'] . '<br />' . '<br />' PHP_EOL; 
     }
 } catch(PDOException $ex) {
     echo $ex->getMessage();
